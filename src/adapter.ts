@@ -256,6 +256,19 @@ export default class TypeORMAdapter implements FilteredAdapter {
   }
 
   /**
+   * updatePolicy updates a policy rule to the storage.
+   */
+  public async updatePolicy(sec: string, ptype: string, oldRule: string[], newRule: string[]) {
+    const oldline = this.savePolicyLine(ptype, oldRule);
+    await this.getRepository().delete({
+      ...oldline,
+    });
+
+    const newline = this.savePolicyLine(ptype, newRule);
+    await this.getRepository().save(newline);
+  }
+
+  /**
    * removePolicy removes a policy rule from the storage.
    */
   public async removePolicy(sec: string, ptype: string, rule: string[]) {
