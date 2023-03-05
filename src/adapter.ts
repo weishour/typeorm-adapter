@@ -259,7 +259,7 @@ export default class TypeORMAdapter implements FilteredAdapter {
    * updatePolicy updates a policy rule to the storage.
    */
   public async updatePolicy(sec: string, ptype: string, oldRule: string[], newRule: string[]) {
-    const oldline = this.savePolicyLine(ptype, oldRule);
+    const oldline = this.savePolicyLine(ptype, oldRule) as FindOptionsWhere<GenericCasbinRule>;
     const existing = await this.getRepository().findOneBy(oldline);
     const newline = this.savePolicyLine(ptype, newRule);
     await this.getRepository().save(this.getRepository().merge(existing, newline));
