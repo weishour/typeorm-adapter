@@ -260,7 +260,7 @@ export default class TypeORMAdapter implements FilteredAdapter {
    */
   public async updatePolicy(sec: string, ptype: string, oldRule: string[], newRule: string[]) {
     const oldline = this.savePolicyLine(ptype, oldRule);
-    const existing = await this.getRepository().findOneBy({ ...oldline });
+    const existing = await this.getRepository().findOneBy(oldline);
     const newline = this.savePolicyLine(ptype, newRule);
     await this.getRepository().save(this.getRepository().merge(existing, newline));
   }
